@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - DSA Social Lab</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-diagram-project"></i>
+                <span>DSA Social Lab</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-house"></i> Home</a></li>
+                <li><a href="dashboard.html"><i class="fas fa-table-columns"></i> Dashboard</a></li>
+                <li><a href="posts.html"><i class="fas fa-newspaper"></i> Posts</a></li>
+                <li><a href="network.html"><i class="fas fa-users"></i> Network</a></li>
+                <li><a href="analytics.html" class="active"><i class="fas fa-chart-column"></i> Analytics</a></li>
+            </ul>
+            <div class="user-menu">
+                <span class="user-name">Haris</span>
+                <div class="user-avatar">HA</div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="analytics-page">
+        <div class="container">
+            <div class="page-header">
+                <h1><i class="fas fa-chart-column"></i> Project Analytics</h1>
+                <p>Simple metrics for explaining how the demo data maps to the data structures in this project.</p>
+                <div class="time-filters">
+                    <button class="btn btn-secondary active">Today</button>
+                    <button class="btn btn-secondary">Project Demo</button>
+                    <button class="btn btn-secondary">Semester View</button>
+                    <button class="btn btn-primary" onclick="exportData()">
+                        <i class="fas fa-download"></i> Export Data
+                    </button>
+                </div>
+            </div>
+
+            <div class="analytics-overview">
+                <div class="overview-card">
+                    <div class="overview-icon success">
+                        <i class="fas fa-circle-check"></i>
+                    </div>
+                    <div class="overview-content">
+                        <h3>Project Health</h3>
+                        <div class="overview-status" id="systemHealth">Stable</div>
+                        <p>Frontend demo and sample data are ready to present</p>
+                    </div>
+                </div>
+                <div class="overview-card">
+                    <div class="overview-icon warning">
+                        <i class="fas fa-memory"></i>
+                    </div>
+                    <div class="overview-content">
+                        <h3>Memory Usage</h3>
+                        <div class="overview-status" id="memoryUsage">58%</div>
+                        <p>Estimated demo usage based on current sample records</p>
+                    </div>
+                </div>
+                <div class="overview-card">
+                    <div class="overview-icon info">
+                        <i class="fas fa-stopwatch"></i>
+                    </div>
+                    <div class="overview-content">
+                        <h3>Refresh Time</h3>
+                        <div class="overview-status" id="responseTime">35ms</div>
+                        <p>Lightweight frontend updates with no heavy libraries</p>
+                    </div>
+                </div>
+                <div class="overview-card">
+                    <div class="overview-icon primary">
+                        <i class="fas fa-user-group"></i>
+                    </div>
+                    <div class="overview-content">
+                        <h3>Profiles Loaded</h3>
+                        <div class="overview-status" id="activeSessions">6</div>
+                        <p>Named group members used throughout the demo</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="analytics-grid">
+                <div class="analytics-card large">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-chart-line"></i> Structure Utilization</h3>
+                    </div>
+                    <div class="metrics-grid">
+                        <div class="metric-item">
+                            <div class="metric-label">Stack Usage</div>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 0%" id="stackBar"></div>
+                            </div>
+                            <div class="metric-value" id="stackMetric">0</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-label">Queue Usage</div>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 0%" id="queueBar"></div>
+                            </div>
+                            <div class="metric-value" id="queueMetric">0</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-label">Tree Nodes</div>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 0%" id="treeBar"></div>
+                            </div>
+                            <div class="metric-value" id="treeMetric">0</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-label">List Nodes</div>
+                            <div class="metric-bar">
+                                <div class="metric-fill" style="width: 0%" id="listBar"></div>
+                            </div>
+                            <div class="metric-value" id="listMetric">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analytics-card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-heart"></i> Engagement Summary</h3>
+                    </div>
+                    <div class="engagement-stats">
+                        <div class="engagement-item">
+                            <div class="engagement-icon likes">
+                                <i class="fas fa-thumbs-up"></i>
+                            </div>
+                            <div class="engagement-details">
+                                <div class="engagement-value" id="totalLikesCount">0</div>
+                                <div class="engagement-label">Total Likes</div>
+                            </div>
+                        </div>
+                        <div class="engagement-item">
+                            <div class="engagement-icon shares">
+                                <i class="fas fa-share"></i>
+                            </div>
+                            <div class="engagement-details">
+                                <div class="engagement-value" id="totalShares">0</div>
+                                <div class="engagement-label">Shares</div>
+                            </div>
+                        </div>
+                        <div class="engagement-item">
+                            <div class="engagement-icon comments">
+                                <i class="fas fa-comment"></i>
+                            </div>
+                            <div class="engagement-details">
+                                <div class="engagement-value" id="totalCommentsCount">0</div>
+                                <div class="engagement-label">Comments</div>
+                            </div>
+                        </div>
+                        <div class="engagement-item">
+                            <div class="engagement-icon rate">
+                                <i class="fas fa-percentage"></i>
+                            </div>
+                            <div class="engagement-details">
+                                <div class="engagement-value" id="analyticsEngagementRate">0%</div>
+                                <div class="engagement-label">Interaction Rate</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="data-structures-details">
+                <h3><i class="fas fa-microchip"></i> Data Structures Detail</h3>
+                <div class="ds-performance">
+                    <div class="ds-performance-card">
+                        <h4><i class="fas fa-layer-group"></i> Stack</h4>
+                        <div class="ds-metrics">
+                            <div class="ds-metric">
+                                <span class="ds-label">Current size</span>
+                                <span class="ds-value" id="stackSizeDetail">0 actions</span>
+                            </div>
+                            <div class="ds-metric">
+                                <span class="ds-label">Capacity</span>
+                                <span class="ds-value">100 actions</span>
+                            </div>
+                            <div class="ds-metric">
+                                <span class="ds-label">Use case</span>
+                                <span class="ds-value">Undo history</span>
+                            </div>
+                            <div class="ds-metric">
+                                <span class="ds-label">Complexity</span>
+                                <span class="ds-value">O(1) push/pop</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ds-performance-card">
+                        <h4><i class="fas fa-stream"></i> Queue</h4>
+                        <div class="ds-metrics">
+                            <div class="ds-metric">
+                                <span class="ds-label">Current size</span>
+                                <span class="ds-value" id="queueSizeDetail">0 notifications</span>
+                            </div>
+                            <div class="ds-metric">
+                                <span class="ds-label">Capacity</span>
+                                <span class="ds-value">50 notifications</span>
+                            </div>
+                            <div class="ds-metric">
+                                <span class="ds-label">Use case</span>
+                                <span class="ds-value">Alerts and updates</span>
+                            </div>
+                            <div class="ds-metric">
+                                <span class="ds-label">Complexity</span>
+                                <span class="ds-value">O(1) enqueue/dequeue</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ds-performance-card">
+                        <h4><i class="fas fa-sitemap"></i> Tree</h4>
+                        <div class="ds-metrics">
+                            <div class="ds-metric">
+                                <span class="ds-label">Profiles</span>
+                                <span class="ds-value" id="treeNodesDetail">0 users</span>
+                            </div>
+                            <div class="ds-metric">
+                                <span class="ds-label">Depth</span>
+                                <span class="ds-value">3 levels</span>
+                            </div>
+                            <div class="ds-metric">
+                                <span class="ds-label">Connections</span>
+                                <span class="ds-value" id="treeConnectionsDetail">0 friendships</span>
+                            </div>
+                            <div class="ds-metric">
+                                <span class="ds-label">Complexity</span>
+                                <span class="ds-value">O(log n) search</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ds-performance-card">
+                        <h4><i class="fas fa-link"></i> Linked List</h4>
+                        <div class="ds-metrics">
+                            <div class="ds-metric">
+                                <span class="ds-label">Posts</span>
+                                <span class="ds-value" id="listNodesDetail">0 posts</span>
+                            </div>
+                            <div class="ds-metric">
+                                <span class="ds-label">Sample memory</span>
+                                <span class="ds-value">1.6KB</span>
+                            </div>
+                            <div class="ds-metric">
+                                <span class="ds-label">Avg. Likes</span>
+                                <span class="ds-value" id="avgLikesDetail">0 likes/post</span>
+                            </div>
+                            <div class="ds-metric">
+                                <span class="ds-label">Complexity</span>
+                                <span class="ds-value">O(n) traversal</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="system-log">
+                <h3><i class="fas fa-clipboard-list"></i> Recent Project Log</h3>
+                <div class="log-container" id="systemLog">
+                    <div class="log-entry success">
+                        <span class="log-time">10:10</span>
+                        <span class="log-message">Haris refreshed the frontend demo data</span>
+                    </div>
+                    <div class="log-entry info">
+                        <span class="log-time">10:18</span>
+                        <span class="log-message">Zohaib reviewed queue notifications</span>
+                    </div>
+                    <div class="log-entry info">
+                        <span class="log-time">10:26</span>
+                        <span class="log-message">Zechriah checked mutual friend output</span>
+                    </div>
+                    <div class="log-entry warning">
+                        <span class="log-time">10:34</span>
+                        <span class="log-message">Azlan updated summary metrics for presentation</span>
+                    </div>
+                    <div class="log-entry success">
+                        <span class="log-time">10:42</span>
+                        <span class="log-message">Final named demo content loaded for class review</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Analytics View</h4>
+                    <p>Built to explain the dataset and structure usage without overcomplicating the UI.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Key Metrics</h4>
+                    <ul>
+                        <li>Posts and likes</li>
+                        <li>Comments and shares</li>
+                        <li>Profiles and connections</li>
+                        <li>Structure utilization</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Focus Areas</h4>
+                    <ul>
+                        <li>Readable presentation</li>
+                        <li>Named team data</li>
+                        <li>Simple complexity references</li>
+                        <li>Exportable JSON sample</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 DSA Social Lab | Analytics View</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

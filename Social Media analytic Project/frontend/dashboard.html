@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - DSA Social Lab</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-diagram-project"></i>
+                <span>DSA Social Lab</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-house"></i> Home</a></li>
+                <li><a href="dashboard.html" class="active"><i class="fas fa-table-columns"></i> Dashboard</a></li>
+                <li><a href="posts.html"><i class="fas fa-newspaper"></i> Posts</a></li>
+                <li><a href="network.html"><i class="fas fa-users"></i> Network</a></li>
+                <li><a href="analytics.html"><i class="fas fa-chart-column"></i> Analytics</a></li>
+            </ul>
+            <div class="user-menu">
+                <span class="user-name">Haris</span>
+                <div class="user-avatar">HA</div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="dashboard">
+        <div class="container">
+            <div class="dashboard-header">
+                <div>
+                    <h1>Project Dashboard</h1>
+                    <p class="page-note">Simple overview of the sample dataset, with demo mode available when the backend is offline.</p>
+                </div>
+                <div class="dashboard-actions">
+                    <button class="btn btn-primary" onclick="refreshData()">
+                        <i class="fas fa-rotate"></i> Refresh Data
+                    </button>
+                    <button class="btn btn-secondary" onclick="exportData()">
+                        <i class="fas fa-download"></i> Export JSON
+                    </button>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-chart-line"></i> System Overview</h3>
+                        <div class="card-icon"><i class="fas fa-server"></i></div>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalPosts">0</div>
+                            <div class="stat-label">Total Posts</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalUsers">0</div>
+                            <div class="stat-label">Profiles</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalLikes">0</div>
+                            <div class="stat-label">Total Likes</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="queueSize">0</div>
+                            <div class="stat-label">Notifications</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-history"></i> Recent Actions</h3>
+                        <div class="card-icon"><i class="fas fa-list"></i></div>
+                    </div>
+                    <div class="actions-list" id="recentActions">
+                        <div class="loading">Loading recent actions...</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-bell"></i> Notifications</h3>
+                        <div class="card-icon"><i class="fas fa-inbox"></i></div>
+                    </div>
+                    <div class="notifications-list" id="notificationsList">
+                        <div class="loading">Loading notifications...</div>
+                    </div>
+                    <button class="btn btn-secondary btn-small" onclick="markAllAsRead()">
+                        <i class="fas fa-check-double"></i> Mark All as Read
+                    </button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-user-group"></i> Team Demo Accounts</h3>
+                </div>
+                <div class="team-mini-grid">
+                    <div class="team-mini-card"><strong>Haris</strong><span>Frontend</span></div>
+                    <div class="team-mini-card"><strong>Zohaib</strong><span>Queue</span></div>
+                    <div class="team-mini-card"><strong>Zechriah</strong><span>Tree</span></div>
+                    <div class="team-mini-card"><strong>Azlan</strong><span>Analytics</span></div>
+                    <div class="team-mini-card"><strong>Kashan</strong><span>Feed</span></div>
+                    <div class="team-mini-card"><strong>Ismail</strong><span>Presentation</span></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-bolt"></i> Quick Actions</h3>
+                </div>
+                <div class="quick-actions-grid">
+                    <button class="action-btn action-tile" onclick="createNewPost()">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>New Post</span>
+                    </button>
+                    <button class="action-btn action-tile" onclick="viewNetwork()">
+                        <i class="fas fa-users"></i>
+                        <span>Open Network</span>
+                    </button>
+                    <button class="action-btn action-tile" onclick="undoLastAction()">
+                        <i class="fas fa-rotate-left"></i>
+                        <span>Undo Action</span>
+                    </button>
+                    <button class="action-btn action-tile" onclick="showAnalytics()">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>See Analytics</span>
+                    </button>
+                    <button class="action-btn action-tile" onclick="clearHistory()">
+                        <i class="fas fa-trash"></i>
+                        <span>Clear History</span>
+                    </button>
+                    <button class="action-btn action-tile" onclick="runDemo()">
+                        <i class="fas fa-play-circle"></i>
+                        <span>Run Demo</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-code-branch"></i> Data Structures Status</h3>
+                </div>
+                <div class="ds-status-grid">
+                    <div class="ds-status-card stack">
+                        <h4><i class="fas fa-layer-group"></i> Stack</h4>
+                        <p>Action History</p>
+                        <div class="ds-stats">
+                            <span id="stackSize">0</span> actions
+                        </div>
+                    </div>
+                    <div class="ds-status-card queue">
+                        <h4><i class="fas fa-stream"></i> Queue</h4>
+                        <p>Notifications</p>
+                        <div class="ds-stats">
+                            <span id="queueStatus">0</span> pending
+                        </div>
+                    </div>
+                    <div class="ds-status-card tree">
+                        <h4><i class="fas fa-sitemap"></i> Tree</h4>
+                        <p>Friend Network</p>
+                        <div class="ds-stats">
+                            <span id="treeNodes">0</span> profiles
+                        </div>
+                    </div>
+                    <div class="ds-status-card list">
+                        <h4><i class="fas fa-link"></i> Linked List</h4>
+                        <p>Posts Feed</p>
+                        <div class="ds-stats">
+                            <span id="listCount">0</span> posts
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>System Status</h4>
+                    <p id="systemStatus">Connecting to backend...</p>
+                    <p id="lastUpdated">Last updated: --</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="posts.html">Posts feed</a></li>
+                        <li><a href="network.html">Friend tree</a></li>
+                        <li><a href="analytics.html">Project analytics</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Demo Notes</h4>
+                    <ul>
+                        <li>Local sample data fallback</li>
+                        <li>Uses team member names</li>
+                        <li>Built for DSA presentation</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 DSA Social Lab | Dashboard View</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="postModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-pen"></i> Create New Post</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Post Content</label>
+                    <textarea class="form-control" id="postContent" rows="4" placeholder="Share a short update about the project..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <select class="form-control" id="postCategory">
+                        <option value="general">General</option>
+                        <option value="tech">Technology</option>
+                        <option value="academic">Academic</option>
+                        <option value="social">Social</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="submitPost()">Publish Post</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

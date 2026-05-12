@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network - DSA Social Lab</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-diagram-project"></i>
+                <span>DSA Social Lab</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-house"></i> Home</a></li>
+                <li><a href="dashboard.html"><i class="fas fa-table-columns"></i> Dashboard</a></li>
+                <li><a href="posts.html"><i class="fas fa-newspaper"></i> Posts</a></li>
+                <li><a href="network.html" class="active"><i class="fas fa-users"></i> Network</a></li>
+                <li><a href="analytics.html"><i class="fas fa-chart-column"></i> Analytics</a></li>
+            </ul>
+            <div class="user-menu">
+                <span class="user-name">Haris</span>
+                <div class="user-avatar">HA</div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="network-page">
+        <div class="container">
+            <div class="page-header">
+                <h1><i class="fas fa-users"></i> Friend Tree View</h1>
+                <p>The same six project members are used here to explain binary tree ideas and social connections.</p>
+                <button class="btn btn-primary" onclick="findMutualFriends()">
+                    <i class="fas fa-user-group"></i> Check Mutual Friends
+                </button>
+            </div>
+
+            <div class="network-container">
+                <div class="network-graph" id="networkGraph">
+                    <div class="loading">Loading network visualization...</div>
+                </div>
+
+                <div class="network-sidebar">
+                    <div class="network-stats">
+                        <h3><i class="fas fa-chart-line"></i> Network Stats</h3>
+                        <div class="stat-item">
+                            <span class="stat-label">Profiles</span>
+                            <span class="stat-value" id="networkUsers">6</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Connections</span>
+                            <span class="stat-value" id="networkConnections">8</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Density</span>
+                            <span class="stat-value" id="networkDensity">0.53</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Avg. Friends</span>
+                            <span class="stat-value" id="avgFriends">2.67</span>
+                        </div>
+                    </div>
+
+                    <div class="user-list">
+                        <h3><i class="fas fa-id-card"></i> Users in Network</h3>
+                        <div class="users-container" id="usersList"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="network-features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-people-arrows"></i>
+                    </div>
+                    <h3>Mutual Friends</h3>
+                    <p>Select any two members to check overlapping connections.</p>
+                    <div class="mutual-friends-form">
+                        <select id="user1">
+                            <option value="1">Haris</option>
+                            <option value="2">Zohaib</option>
+                            <option value="3">Zechriah</option>
+                            <option value="4">Azlan</option>
+                            <option value="5">Kashan</option>
+                            <option value="6">Ismail</option>
+                        </select>
+                        <select id="user2">
+                            <option value="2">Zohaib</option>
+                            <option value="1">Haris</option>
+                            <option value="3">Zechriah</option>
+                            <option value="4">Azlan</option>
+                            <option value="5">Kashan</option>
+                            <option value="6">Ismail</option>
+                        </select>
+                        <button class="btn btn-primary" onclick="findMutual()">
+                            <i class="fas fa-search"></i> Find
+                        </button>
+                    </div>
+                    <div class="mutual-results" id="mutualResults"></div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Friend Suggestions</h3>
+                    <p>See which group member would be the best new connection based on mutual links.</p>
+                    <div class="suggestions-form">
+                        <select id="suggestForUser">
+                            <option value="1">Haris</option>
+                            <option value="2">Zohaib</option>
+                            <option value="3">Zechriah</option>
+                            <option value="4">Azlan</option>
+                            <option value="5">Kashan</option>
+                            <option value="6">Ismail</option>
+                        </select>
+                        <button class="btn btn-primary" onclick="getSuggestions()">
+                            <i class="fas fa-lightbulb"></i> Suggest
+                        </button>
+                    </div>
+                    <div class="suggestions-results" id="suggestionsResults"></div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sitemap"></i>
+                    </div>
+                    <h3>Tree Operations</h3>
+                    <p>Use the helper actions below while explaining the graph structure in class.</p>
+                    <div class="tree-ops">
+                        <button class="btn btn-secondary" onclick="displayTree()">
+                            <i class="fas fa-eye"></i> Show Tree
+                        </button>
+                        <button class="btn btn-secondary" onclick="findMostConnected()">
+                            <i class="fas fa-crown"></i> Most Connected
+                        </button>
+                        <button class="btn btn-secondary" onclick="calculateDensity()">
+                            <i class="fas fa-calculator"></i> Density
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tree-visualization">
+                <h3><i class="fas fa-project-diagram"></i> Binary Tree Layout</h3>
+                <div class="tree-diagram" id="treeDiagram">
+                    <div class="tree-node root">Haris</div>
+                    <div class="tree-branch">
+                        <div class="tree-node left">Zohaib</div>
+                        <div class="tree-node right">Zechriah</div>
+                    </div>
+                    <div class="tree-branch three-nodes">
+                        <div class="tree-node left">Azlan</div>
+                        <div class="tree-node center">Kashan</div>
+                        <div class="tree-node right">Ismail</div>
+                    </div>
+                </div>
+                <div class="tree-explanations">
+                    <h4>Discussion Points</h4>
+                    <ul>
+                        <li>Insertion: O(log n) in balanced case</li>
+                        <li>Search: O(log n) in balanced case</li>
+                        <li>Traversal: O(n)</li>
+                        <li>Mutual friends scan: O(n)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Network Module</h4>
+                    <p>Binary tree inspired demo for friendships and mutual connections.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Algorithms</h4>
+                    <ul>
+                        <li>Traversal for display</li>
+                        <li>Mutual friend lookup</li>
+                        <li>Simple connection ranking</li>
+                        <li>Density calculation</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Visible Members</h4>
+                    <ul>
+                        <li>Haris</li>
+                        <li>Zohaib</li>
+                        <li>Zechriah</li>
+                        <li>Azlan</li>
+                        <li>Kashan</li>
+                        <li>Ismail</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 DSA Social Lab | Network View</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
